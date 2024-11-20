@@ -7,53 +7,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model category {
-  id           Int?
-  cat_id       Int?
+model Category {
+  id           Int           @id @default(autoincrement())
+  cat_id       Int          @unique
   cat_name_bn  String?
   cat_name_en  String?
   no_of_subcat Int?
   no_of_dua    Int?
   cat_icon     String?
+  subCategories SubCategory[]
 
-  @@ignore
+  @@map("category")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model dua {
-  id                 Int?
-  cat_id             Int?
-  subcat_id          Int?
-  dua_id             Int?
-  dua_name_bn        String?
-  dua_name_en        String?
-  top_bn             String?
-  top_en             String?
-  dua_arabic         String?
-  dua_indopak        String?
-  clean_arabic       String?
-  transliteration_bn String?
-  transliteration_en String?
-  translation_bn     String?
-  translation_en     String?
-  bottom_bn          String?
-  bottom_en          String?
-  refference_bn      String?
-  refference_en      String?
-  audio              String?
-
-  @@ignore
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model sub_category {
-  id             Int?
-  cat_id         Int?
-  subcat_id      Int?
+model SubCategory {
+  id             Int      @id @default(autoincrement())
+  cat_id         Int
+  subcat_id      Int      @unique
   subcat_name_bn String?
   subcat_name_en String?
   no_of_dua      Int?
+  category       Category @relation(fields: [cat_id], references: [cat_id])
+  duas          Dua[]
 
-  @@ignore
+  @@map("sub_category")
+}
+
+model Dua {
+  id                 Int         @id @default(autoincrement())
+  cat_id            Int
+  subcat_id         Int
+  dua_id            Int         @unique
+  dua_name_bn       String?
+  dua_name_en       String?
+  top_bn            String?
+  top_en            String?
+  dua_arabic        String?
+  dua_indopak       String?
+  clean_arabic      String?
+  transliteration_bn String?
+  transliteration_en String?
+  translation_bn    String?
+  translation_en    String?
+  bottom_bn         String?
+  bottom_en         String?
+  refference_bn     String?
+  refference_en     String?
+  audio             String?
+  subCategory      SubCategory @relation(fields: [subcat_id], references: [subcat_id])
+
+  @@map("dua")
 }
