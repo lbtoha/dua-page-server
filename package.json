@@ -18,8 +18,8 @@
     "vercel-build": "prisma generate && tsc"
   },
   "prisma": {
-  "schema": "./prisma/schema.prisma"
-},
+    "schema": "./prisma/schema.prisma"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
