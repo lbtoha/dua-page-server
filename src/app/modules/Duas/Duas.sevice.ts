@@ -18,6 +18,9 @@ const getDuaFromDB = async (cat: any) => {
     where: {
       cat_id: catId,
     },
+    include: {
+      subCategory: true,
+    },
   });
 
   return {

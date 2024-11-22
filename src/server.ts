@@ -2,8 +2,8 @@ import { Server } from "http";
 import app from "./app";
 
 async function main() {
-  const server: Server = app.listen(process.env.PORT, () => {
-    console.log("Sever is running on port ", process.env.PORT);
+  const server: Server = app.listen(process.env.PORT || 5000, () => {
+    console.log("Sever is running on port ", process.env.PORT || 5000);
   });
 
   const exitHandler = () => {
